@@ -56,3 +56,10 @@ gh release create vN.N.N out/wasm_bridge_bg.wasm
 ```
 
 Version scheme: bump the tag whenever the bridge source or patch changes.
+
+## Reproducibility note
+
+A fresh build of this source produces a functionally identical binary (same
+exports, same behavior) but not a byte-identical one: rustc embeds absolute
+source paths in panic-location metadata, so the output hash depends on the
+directory you build in. Building with `RUSTFLAGS="--remap-path-prefix=$(pwd)=/build"` removes that variance if you need to verify against a release hash.
